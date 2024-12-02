@@ -44,3 +44,36 @@ void day1_part1(char *filepath) {
 
     free(dat.data);
 }
+
+long num_occurances(vec_longs vec, long num) {
+    long sum = 0;
+    for (ptrdiff_t i = 0; i < vec.len; i++) {
+        if (vec.data[i] == num) {
+            sum ++;
+        }
+    }
+    return sum;
+}
+
+void day1_part2(char *filepath) {
+    string dat = file_parse(filepath);
+    arena a = arena_init(dat.len * sizeof(string) * 4);
+    vec_string lines = string_split(&a, dat, make_string("\n"));
+
+    vec_longs left = {0};
+    vec_longs right = {0};
+    for (ptrdiff_t i = 0; i < lines.len; i++) {
+        char * p = lines.data[i].data;
+        *push(&left, &a) = strtol(p, &p, 10);
+        *push(&right, &a) = strtol(p, &p, 10);
+    }
+
+    vec_longs similarities = {0};
+    for (ptrdiff_t i = 0; i < left.len; i++) {
+        *push(&similarities, &a) = left.data[i] * num_occurances(right, left.data[i]);
+    }
+
+    fprintf(stdout, "SUM: %ld\n", sum(similarities));
+
+    free(dat.data);
+}

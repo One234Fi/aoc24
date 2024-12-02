@@ -25,7 +25,7 @@ void execute(int day, int part, char * filepath) {
             if (part == 1) {
                 day1_part1(filepath);
             } else {
-                //day1_part2(filepath);
+                day1_part2(filepath);
             }
             break;
         default:
