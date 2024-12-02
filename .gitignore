@@ -5,6 +5,8 @@ sample*
 
 #c gitignore
 
+build/
+
 # Prerequisites
 *.d
 
