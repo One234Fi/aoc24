@@ -18,23 +18,30 @@ int main (int argc, char* argv[]) {
     execute(day, part, filepath);
 }
 
-void execute(int day, int part, char * filepath) {
-    switch (day) {
-        case 1:
-            if (part == 1) {
-                day1_part1(filepath);
-            } else {
-                day1_part2(filepath);
-            }
-            break;
-        case 2:
-            if (part == 1) {
-                day2_part1(filepath);
-            } else {
-                day2_part2(filepath);
-            }
-            break;
-        default:
-            fprintf(stderr, "Invalid input: %d, %d\n", day, part);
+void (*table[][2])(char * filepath) = {
+    {
+    day1_part1,
+    day1_part2,
+    },
+    {
+    day2_part1,
+    day2_part2
+    },
+    {
+    day3_part1,
+    day3_part2,
     }
+};
+
+void execute(int day, int part, char * filepath) {
+    if (part > 2) {
+        part = 2;
+    }
+    if (part < 1) {
+        part = 1;
+    }
+
+    int index = day - 1;
+    int sub = part - 1;
+    table[index][sub](filepath);
 }
