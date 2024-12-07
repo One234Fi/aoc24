@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 long parse_mul(char ** ptr) {
     char * p = *ptr;
@@ -12,18 +13,15 @@ long parse_mul(char ** ptr) {
         p+=4;
         if (isdigit(*p)) {
             long a = strtol(p, &p, 10);
-            fprintf(stdout, "parsed a: %ld\n", a);
 
             if (*p == ',') {
                 p++;
                 if (isdigit(*p)) {
                     long b = strtol(p, &p, 10);
-                    fprintf(stdout, "parsed b: %ld\n", b);
 
                     if (*p == ')') {
                         *ptr = p;
                         return a * b;
-                        fprintf(stdout, "adding: %ld\n", a * b);
                     }
                 }
             }
@@ -55,7 +53,36 @@ void day3_part1(char *filepath) {
     fprintf(stdout, "%ld\n", sum);
 }
 
+void parse_do(char ** ptr, bool * flag) {
+    if (strncmp(*ptr, "don't()", 7) == 0) {
+        *ptr += 6;
+        *flag = false;
+    } else if (strncmp(*ptr, "do()", 4) == 0) {
+        *ptr += 3;
+        *flag = true;
+    }  
+    *ptr += 1;
+}
+    
+
 void day3_part2(char *filepath) {
+    string dat = file_parse(filepath);
+    long sum = 0;
+
+    char * p = dat.data;
+    char * curr = p;
+    bool should_parse = true;
+    while (p - dat.data < dat.len) {
+        if (*p == 'm' && should_parse) {
+            sum += parse_mul(&p);
+        } else if (*p == 'd') {
+            parse_do(&p, &should_parse);
+        } else {
+            p++;
+        }
+    }
+    
+    fprintf(stdout, "%ld\n", sum);
 }
 
 
