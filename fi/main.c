@@ -16,7 +16,6 @@ int main (int argc, char* argv[]) {
     char* filepath = argv[3];
     
     execute(day, part, filepath);
-
 }
 
 void execute(int day, int part, char * filepath) {
@@ -26,6 +25,11 @@ void execute(int day, int part, char * filepath) {
                 day1_part1(filepath);
             } else {
                 day1_part2(filepath);
+            }
+            break;
+        case 2:
+            if (part == 1) {
+                day2_part1(filepath);
             }
             break;
         default:

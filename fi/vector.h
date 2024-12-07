@@ -23,5 +23,6 @@ typedef struct {
     ptrdiff_t len;
     ptrdiff_t cap;
 } vec_longs;
+void print_longs(vec_longs v);
 
 #endif

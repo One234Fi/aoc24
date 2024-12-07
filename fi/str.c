@@ -1,6 +1,8 @@
 #include "str.h"
 #include "arena.h"
 #include "vector.h"
+#include <ctype.h>
+#include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
 
@@ -14,7 +16,7 @@ vec_string string_split(arena * a, string s, string delim) {
                 string n = {0};
                 n.data = s.data + last;
                 n.len = i - last;
-                last = i;
+                last = i + 1;
                 *push(&v, a) = n;
             }
         } else {
@@ -22,6 +24,22 @@ vec_string string_split(arena * a, string s, string delim) {
             n.data = s.data + last;
             n.len = i - last;
             *push(&v, a) = n;
+        }
+    }
+
+    return v;
+}
+
+vec_longs parse_longs(arena * a, string s) {
+    vec_longs v = {0};
+
+    char * c = s.data;
+    while ((*c) != '\n') {
+        if (isdigit(*c)) {
+            long l = strtol(c, &c, 10);
+            *push(&v, a) = l;
+        } else {
+            c++;
         }
     }
 

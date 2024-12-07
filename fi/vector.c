@@ -1,6 +1,8 @@
+#include <stddef.h>
 #include <stdio.h>
 #include <string.h>
 #include "vector.h"
+#include "str.h"
 
 
 void grow(void * slice, ptrdiff_t size, arena * a) {
@@ -30,4 +32,11 @@ void grow(void * slice, ptrdiff_t size, arena * a) {
 
     temp.cap *= 2;
     memcpy(slice, &temp, sizeof(temp));
+}
+
+void print_longs(vec_longs v) {
+    for (ptrdiff_t i = 0; i < v.len; i++) {
+        fprintf(stdout, "%ld, ", v.data[i]);
+    }
+    fprintf(stdout, "\n%td items\n", v.len);
 }

@@ -4,4 +4,6 @@
 void day1_part1(char * filepath);
 void day1_part2(char *filepath);
 
+void day2_part1(char * filepath);
+
 #endif
