@@ -30,6 +30,8 @@ void execute(int day, int part, char * filepath) {
         case 2:
             if (part == 1) {
                 day2_part1(filepath);
+            } else {
+                day2_part2(filepath);
             }
             break;
         default:

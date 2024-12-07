@@ -3,6 +3,7 @@
 #include "str.h"
 #include "vector.h"
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -10,6 +11,7 @@
 bool is_safe(vec_longs report) {
     bool ascend = false;
     bool descend = false;
+    int tolerated_faults = 0;
     bool adjacency_violation = false;
 
     vec_longs diffs = {0};
@@ -56,3 +58,36 @@ void day2_part1(char * filepath) {
     fprintf(stdout, "%ld\n", sum);
 }
 
+bool problem_dampener(arena scratch, vec_longs v) {
+    for (ptrdiff_t i = 0; i < v.len; i++) {
+        vec_longs p = {0};
+        for (int j = 0; j < v.len; j++) {
+            if (j != i) {
+                *push(&p, &scratch) = v.data[j];
+            }
+        }
+        if (is_safe(p)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void day2_part2(char * filepath) {
+    string dat = file_parse(filepath);
+    arena a = arena_init(dat.len * 8);
+    vec_string lines = string_split(&a, dat, make_string("\n"));
+
+    long sum = 0;
+    for (ptrdiff_t i = 0; i < lines.len; i++) {
+        arena scratch = a;
+        vec_longs report = parse_longs(&scratch, lines.data[i]);
+        bool safe = problem_dampener(scratch, report);
+
+        if (safe) {
+            sum++;
+        }
+    }
+
+    fprintf(stdout, "%ld\n", sum);
+}
