@@ -2,6 +2,7 @@
 #include "file.h"
 #include "str.h"
 #include <stdio.h>
+#include <stdbool.h>
 
 #define left (x > 2)
 #define right (x < lines.data[y].len - 3)
@@ -73,4 +74,35 @@ void day4_part1(char * filepath) {
 }
 
 void day4_part2(char * filepath) {
+    string dat = file_parse(filepath);
+    arena a = arena_init(dat.len * 4);
+    vec_string lines = string_split(&a, dat, make_string("\n"));
+    long sum = 0;
+    for (ptrdiff_t y = 1; y < lines.len-1; y++) {
+        for (ptrdiff_t x = 1; x < lines.data[y].len-1; x++) {
+            bool mida = get(x, y) == 'A';
+
+            bool mas1 = (
+                    get(x-1, y-1) == 'M' &&
+                    get(x+1, y+1) == 'S'
+                    ) || (
+                    get(x-1, y-1) == 'S' &&
+                    get(x+1, y+1) == 'M'
+                    );
+            bool mas2 = (
+                    get(x+1, y-1) == 'M' &&
+                    get(x-1, y+1) == 'S'
+                    ) || (
+                    get(x+1, y-1) == 'S' &&
+                    get(x-1, y+1) == 'M'
+                    );
+
+            if (mida && mas1 && mas2) {
+                sum++;
+                fprintf(stdout, "%ld, %ld\n", x, y);
+            }
+        }
+    }
+
+    fprintf(stdout, "%ld\n", sum);
 }
