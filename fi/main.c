@@ -35,6 +35,10 @@ void (*table[][2])(char * filepath) = {
     day4_part1,
     day4_part2,
     },
+    {
+    day5_part1,
+    day5_part2,
+    },
 };
 
 void execute(int day, int part, char * filepath) {
