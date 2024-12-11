@@ -18,27 +18,19 @@ int main (int argc, char* argv[]) {
     execute(day, part, filepath);
 }
 
-void (*table[][2])(char * filepath) = {
-    {
+void (*table[])(char * filepath) = {
     day1_part1,
     day1_part2,
-    },
-    {
     day2_part1,
-    day2_part2
-    },
-    {
+    day2_part2,
     day3_part1,
     day3_part2,
-    },
-    {
     day4_part1,
     day4_part2,
-    },
-    {
     day5_part1,
     day5_part2,
-    },
+    day6_part1,
+    day6_part2,
 };
 
 void execute(int day, int part, char * filepath) {
@@ -49,7 +41,7 @@ void execute(int day, int part, char * filepath) {
         part = 1;
     }
 
-    int index = day - 1;
+    int index = (day - 1) * 2;
     int sub = part - 1;
-    table[index][sub](filepath);
+    table[index + sub](filepath);
 }

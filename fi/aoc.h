@@ -11,5 +11,7 @@ void day4_part1(char * filepath);
 void day4_part2(char * filepath);
 void day5_part1(char * filepath);
 void day5_part2(char * filepath);
+void day6_part1(char * filepath);
+void day6_part2(char * filepath);
 
 #endif
