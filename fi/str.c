@@ -30,6 +30,25 @@ vec_string string_split(arena * a, string s, string delim) {
     return v;
 }
 
+string string_clone(arena * a, string s) {
+    string c = {0};
+    c.len = s.len;
+    c.data = new(a, char, s.len);
+    memcpy(c.data, s.data, s.len);
+    return c;
+}
+
+vec_string vec_string_clone(arena * a, vec_string v) {
+    vec_string c = {0};
+    c.len = v.len;
+    c.cap = v.cap;
+    c.data = new(a, string, v.cap);
+    for (long i = 0; i < v.len; i++) {
+        c.data[i] = string_clone(a, v.data[i]);
+    }
+    return c;
+}
+
 vec_longs parse_longs(arena * a, string s) {
     vec_longs v = {0};
 
@@ -45,3 +64,4 @@ vec_longs parse_longs(arena * a, string s) {
 
     return v;
 }
+

@@ -19,6 +19,8 @@ typedef struct {
 } vec_string;
 
 vec_string string_split(arena * a, string s, string delim);
+string string_clone(arena * a, string s);
 vec_longs parse_longs(arena * a, string s);
+vec_string vec_string_clone(arena * a, vec_string v);
 
 #endif
