@@ -22,8 +22,12 @@ $(BUILD_DIR)/%.c.o: %.c
 	mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-.PHONY: clean
+.PHONY: clean dbg
 clean:
 	rm -r $(BUILD_DIR)
+
+dbg: $(BUILD_DIR)/$(TARGET_EXEC)
+	gdb $<
+
 
 -include $(DEPS)
